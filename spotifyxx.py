@@ -21,7 +21,7 @@ else:
     print("usage: python spotifyxx.py [username]")
     sys.exit()
 
-scope = 'user-read-private user-read-playback-state user-modify-playback-state playlist-modify-public'
+scope = 'playlist-modify-public'
 
 # user ID: santamariajoh1
 
@@ -50,8 +50,7 @@ response = json.dumps(playlistsUser, sort_keys=True, indent=4)
 playlists_json = json.loads(response)
 playlists = playlists_json['items']
 for i in range(0,5):
-    print(playlists[i]['id'])
-    playlist_id = playlists[i]['id']
+    playlist_id = playlists[i]['id'] # The song will be added to the last playlist
 
 
 
@@ -85,13 +84,6 @@ while True:
         webbrowser.open(artist['images'][0]['url'])
         artistID = artist['id']
         print(artistID)
-        print('''
-
-
-
-
-
-        ''')
 
         #Album and track Details
         trackURIs = []
@@ -101,6 +93,7 @@ while True:
         # Extract Album data
         albumResults = spotifyObject.artist_albums(artistID)
         albumResults = albumResults['items']
+
 
         for item in albumResults:
             print("ALBUM " + item['name'])
@@ -124,18 +117,13 @@ while True:
             if songSelection == "x":
                 break
             webbrowser.open(trackArt[int(songSelection)])
-
+            track_id = [trackURIs[int(songSelection)]]
+            
         # Add Song to Playlist
             addSong = input(">>> Do you want to add this song to your playlist? Press Y for Yes and N for No: ")
-
-            track_ids = trackURIs
-
             if songSelection != "x" and addSong == "y":
-                sp = spotipy.Spotify(auth=token)
-                sp.trace = False
-                results = sp.user_playlist_add_tracks(username, playlist_id, track_ids)
-                print(results)
-
+                results = spotifyObject.user_playlist_add_tracks(username, playlist_id, track_id)
+    
 
     # End the program
     if choice == "1":
