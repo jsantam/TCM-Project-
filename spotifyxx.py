@@ -4,7 +4,7 @@ import json
 import spotipy
 import webbrowser
 import spotipy.util as util
-from json.decoder import JSONDecodeError
+from json.decoder import JSONDecodeError # I don't think you need this
 
 os.environ["SPOTIPY_CLIENT_ID"] = 'b2fa453fcfb34b46bb8d6964f5ba00ab'
 os.environ["SPOTIPY_CLIENT_SECRET"] = '0073965725f342c68db179bee1f9a066'
