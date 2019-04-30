@@ -36,17 +36,23 @@ except:
 # Create our spotifyObject with permissions
 spotifyObject = spotipy.Spotify(auth=token)
 
-# Might be able to delete these 2 lines.
-#user = spotifyObject.current_user()
+user = spotifyObject.current_user()
 #print(json.dumps(user, sort_keys=True, indent=4))
+
+
+displayName = user['display_name']
+followers = user['followers']['total']
+Country = user['country']
 
 # Playlist Data
 playlistsUser = spotifyObject.current_user_playlists(50,0)
 response = json.dumps(playlistsUser, sort_keys=True, indent=4)
 playlists_json = json.loads(response)
 playlists = playlists_json['items']
-for i in range(0,len(playlists)):
+for i in range(0,5):
     print(playlists[i]['id'])
+    playlist_id = playlists[i]['id']
+
 
 
 while True:
@@ -79,7 +85,14 @@ while True:
         webbrowser.open(artist['images'][0]['url'])
         artistID = artist['id']
         print(artistID)
-    
+        print('''
+
+
+
+
+
+        ''')
+
         #Album and track Details
         trackURIs = []
         trackArt = []
@@ -116,7 +129,6 @@ while True:
             addSong = input(">>> Do you want to add this song to your playlist? Press Y for Yes and N for No: ")
 
             track_ids = trackURIs
-            playlist_id = input('>>> What is the Playlist ID: ')
 
             if songSelection != "x" and addSong == "y":
                 sp = spotipy.Spotify(auth=token)
@@ -128,7 +140,3 @@ while True:
     # End the program
     if choice == "1":
         break
-
-
-
-# print(json.dumps(VARIABLE, sort_keys=True, indent=4))
