@@ -36,31 +36,17 @@ except:
 # Create our spotifyObject with permissions
 spotifyObject = spotipy.Spotify(auth=token)
 
-user = spotifyObject.current_user()
-print(json.dumps(user, sort_keys=True, indent=4))
-
-displayName = user['display_name']
-followers = user['followers']['total']
-Country = user['country']
+# Might be able to delete these 2 lines.
+#user = spotifyObject.current_user()
+#print(json.dumps(user, sort_keys=True, indent=4))
 
 # Playlist Data
-
 playlistsUser = spotifyObject.current_user_playlists(50,0)
-print(json.dumps(playlistsUser, sort_keys=True, indent=4))
-
-# Playlist Extract Data
-
-playlist = playlistsUser['name']
-print(playlist)
-print()
-playlistID = playlist['id']
-print(playlistID)
-
-# Playlist URIS
-
-playlistURIs = []
-
-playlist_ids = playlistURIs
+response = json.dumps(playlistsUser, sort_keys=True, indent=4)
+playlists_json = json.loads(response)
+playlists = playlists_json['items']
+for i in range(0,len(playlists)):
+    print(playlists[i]['id'])
 
 
 while True:
